@@ -77,20 +77,39 @@ jobs:
           cp .Brewfile "$HOME/.Brewfile"
       - name: Check packages exist in brew
         run: |
-          fail=0
+          # Test brews
           while IFS= read -r line; do
             [[ -z "$line" || "$line" == \#* ]] && continue
             pkg=$(echo "$line" | awk '{print $2}')
             if brew info "$pkg" &>/dev/null; then
-              echo "  ok: $pkg available"
+              echo "  ok: brew $pkg"
             else
-              echo "  WARN: $pkg not in brew"
+              echo "  WARN: brew $pkg not found"
             fi
           done < <(grep "^brew " .Brewfile)
-      - name: Run brew bundle
+          # Test casks
+          while IFS= read -r line; do
+            [[ -z "$line" || "$line" == \#* ]] && continue
+            pkg=$(echo "$line" | awk '{print $2}')
+            if brew info --cask "$pkg" &>/dev/null; then
+              echo "  ok: cask $pkg"
+            else
+              echo "  WARN: cask $pkg not found"
+            fi
+          done < <(grep "^cask " .Brewfile)
+          # Test taps
+          while IFS= read -r line; do
+            [[ -z "$line" || "$line" == \#* ]] && continue
+            pkg=$(echo "$line" | awk '{print $2}')
+            if brew tap | grep -q "$pkg"; then
+              echo "  ok: tap $pkg"
+            else
+              echo "  WARN: tap $pkg not found"
+            fi
+          done < <(grep "^tap " .Brewfile)
+      - name: Run brew bundle (dry-run)
         run: |
-          brew bundle install --force || { echo "  WARN: brew bundle failed"; }
-          echo "  ok: brew bundle executed"
+          brew bundle check --force 2>/dev/null && echo "  ok: brew bundle satisfied" || echo "  info: brew bundle needs install"
 
   # -------------------------------------------------------------------------
   # Bootstrap test
