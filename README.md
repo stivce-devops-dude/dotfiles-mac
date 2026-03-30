@@ -1,8 +1,14 @@
 # dotfiles-mac
 
-[![Test macOS](https://github.com/stivce-devops-dude/dotfiles-mac/actions/workflows/test.yml/badge.svg?branch=main)](https://github.com/stivce-devops-dude/dotfiles-mac/actions/workflows/test.yml)
-
 macOS-specific dotfiles managed with yadm.
+
+| CI Job | Badge |
+|--------|-------|
+| Lint | [![Lint](https://github.com/stivce-devops-dude/dotfiles-mac/actions/workflows/test.yml/badge.svg?job=lint)](https://github.com/stivce-devops-dude/dotfiles-mac/actions/workflows/test.yml) |
+| Validate | [![Validate](https://github.com/stivce-devops-dude/dotfiles-mac/actions/workflows/test.yml/badge.svg?job=validate)](https://github.com/stivce-devops-dude/dotfiles-mac/actions/workflows/test.yml) |
+| Bootstrap | [![Bootstrap](https://github.com/stivce-devops-dude/dotfiles-mac/actions/workflows/test.yml/badge.svg?job=bootstrap)](https://github.com/stivce-devops-dude/dotfiles-mac/actions/workflows/test.yml) |
+| Brew Bundle | [![Brew Bundle](https://github.com/stivce-devops-dude/dotfiles-mac/actions/workflows/test.yml/badge.svg?job=brew-bundle)](https://github.com/stivce-devops-dude/dotfiles-mac/actions/workflows/test.yml) |
+| Test macOS | [![Test macOS](https://github.com/stivce-devops-dude/dotfiles-mac/actions/workflows/test.yml/badge.svg?job=test-macos)](https://github.com/stivce-devops-dude/dotfiles-mac/actions/workflows/test.yml) |
 
 ## Setup
 
@@ -31,11 +37,14 @@ yadm bootstrap
 
 ## CI Tests
 
-- **Lint**: bash/zsh syntax on all shell scripts
-- **Validate**: Brewfile syntax, SSH config, kitty config
-- **Brew Bundle**: Tests packages/casks/taps exist in brew
-- **Deploy**: Tests config deployment on macOS
-- **Integration**: zsh config loading, starship
+| Job | Description |
+|-----|-------------|
+| Lint | bash/zsh syntax validation on all shell scripts |
+| Validate | Brewfile syntax, SSH config, kitty config |
+| Bootstrap | Tests bootstrap script runs without errors |
+| Brew Bundle | Verifies packages/casks/taps exist in brew |
+| Deploy | Tests config deployment on macOS |
+| Integration | zsh config loading, starship |
 
 ## Dependencies
 
