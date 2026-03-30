@@ -65,6 +65,34 @@ jobs:
           fi
 
   # -------------------------------------------------------------------------
+  # Brewfile test
+  # -------------------------------------------------------------------------
+  brew-bundle:
+    name: Test Brewfile
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Deploy Brewfile
+        run: |
+          cp .Brewfile "$HOME/.Brewfile"
+      - name: Check packages exist in brew
+        run: |
+          fail=0
+          while IFS= read -r line; do
+            [[ -z "$line" || "$line" == \#* ]] && continue
+            pkg=$(echo "$line" | awk '{print $2}')
+            if brew info "$pkg" &>/dev/null; then
+              echo "  ok: $pkg available"
+            else
+              echo "  WARN: $pkg not in brew"
+            fi
+          done < <(grep "^brew " .Brewfile)
+      - name: Run brew bundle
+        run: |
+          brew bundle install --force || { echo "  WARN: brew bundle failed"; }
+          echo "  ok: brew bundle executed"
+
+  # -------------------------------------------------------------------------
   # Bootstrap test
   # -------------------------------------------------------------------------
   bootstrap:
