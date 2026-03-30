@@ -1,0 +1,77 @@
+#!/usr/bin/env sh
+set -e
+
+log "Configuring Dock..."
+defaults write com.apple.dock orientation -string left
+defaults write com.apple.dock autohide -bool true
+defaults write com.apple.dock autohide-delay -float 0
+defaults write com.apple.dock autohide-time-modifier -float 0
+defaults write com.apple.dock launchanim -bool false
+defaults write com.apple.dock persistent-apps -array
+defaults write com.apple.dock persistent-others -array
+
+log "Hiding menu bar..."
+defaults write NSGlobalDomain _HIHideMenuBar -bool true
+
+log "Adding apps to Dock..."
+
+defaults write com.apple.dock persistent-apps -array-add "$(cat <<'EOF'
+<dict>
+  <key>tile-data</key>
+  <dict>
+    <key>file-data</key>
+    <dict>
+      <key>_CFURLString</key>
+      <string>/Applications/Arc.app</string>
+      <key>_CFURLStringType</key>
+      <integer>0</integer>
+    </dict>
+  </dict>
+</dict>
+EOF
+)"
+
+defaults write com.apple.dock persistent-apps -array-add "$(cat <<'EOF'
+<dict>
+  <key>tile-data</key>
+  <dict>
+    <key>file-data</key>
+    <dict>
+      <key>_CFURLString</key>
+      <string>/Applications/Safari.app</string>
+      <key>_CFURLStringType</key>
+      <integer>0</integer>
+    </dict>
+  </dict>
+</dict>
+EOF
+)"
+
+defaults write com.apple.dock persistent-others -array-add "$(cat <<EOF
+<dict>
+  <key>tile-data</key>
+  <dict>
+    <key>arrangement</key>
+    <integer>2</integer>
+    <key>displayas</key>
+    <integer>1</integer>
+    <key>showas</key>
+    <integer>1</integer>
+    <key>file-data</key>
+    <dict>
+      <key>_CFURLString</key>
+      <string>file://${HOME}/Downloads</string>
+      <key>_CFURLStringType</key>
+      <integer>15</integer>
+    </dict>
+  </dict>
+  <key>tile-type</key>
+  <string>directory-tile</string>
+</dict>
+EOF
+)"
+
+log "Restarting UI services..."
+killall Dock || true
+killall Finder || true
+killall SystemUIServer || true

@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Source libs
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../lib" && pwd)"
+source "$SCRIPT_DIR/logging"
+
+# Ensure running on macOS
+if [[ "$(uname)" != "Darwin" ]]; then
+  die "This step must run on macOS."
+fi
+
+# Request sudo upfront
+sudo -v
+
+# Xcode Command Line Tools
+if ! xcode-select -p &>/dev/null; then
+  log "Installing Xcode Command Line Tools..."
+  xcode-select --install
+  until xcode-select -p &>/dev/null; do sleep 10; done
+else
+  log "Xcode Command Line Tools already installed."
+fi
+
+# Rosetta 2 (Apple Silicon only)
+if [[ "$(uname -m)" == "arm64" ]]; then
+  if ! pkgutil --pkg-info=com.apple.pkg.RosettaUpdateAuto &>/dev/null; then
+    log "Installing Rosetta 2..."
+    softwareupdate --install-rosetta --agree-to-license
+  else
+    log "Rosetta 2 already installed."
+  fi
+fi
+
+# macOS updates
+log "Checking for macOS updates..."
+softwareupdate --all --install || true
