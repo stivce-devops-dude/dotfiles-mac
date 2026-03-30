@@ -29,6 +29,10 @@ echo "==> Deploying dotfiles for platform: $PLATFORM"
 mkdir -p "$HOME/.config/kitty"
 deploy "$REPO_ROOT/.config/kitty/kitty.conf" "$HOME/.config/kitty/kitty.conf"
 
+# .config/aerospace/aerospace.toml
+mkdir -p "$HOME/.config/aerospace"
+deploy "$REPO_ROOT/.config/aerospace/aerospace.toml" "$HOME/.config/aerospace/aerospace.toml"
+
 # .Brewfile
 deploy "$REPO_ROOT/.Brewfile" "$HOME/.Brewfile"
 
