@@ -10,6 +10,12 @@ if [[ "$(uname)" != "Darwin" ]]; then
   die "This step must run on macOS."
 fi
 
+# Skip in CI
+if [[ "${CI:-}" == "true" ]]; then
+  log "Skipping system setup in CI"
+  exit 0
+fi
+
 # Request sudo upfront
 sudo -v
 
@@ -32,6 +38,8 @@ if [[ "$(uname -m)" == "arm64" ]]; then
   fi
 fi
 
-# macOS updates
-log "Checking for macOS updates..."
-softwareupdate --all --install || true
+# macOS updates (skip in CI)
+if [[ "${CI:-}" != "true" ]]; then
+  log "Checking for macOS updates..."
+  softwareupdate --all --install || true
+fi
