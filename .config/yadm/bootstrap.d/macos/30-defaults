@@ -1,5 +1,9 @@
-#!/usr/bin/env sh
-set -e
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Source libs
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../lib" && pwd)"
+source "$SCRIPT_DIR/logging"
 
 log "Configuring Dock..."
 defaults write com.apple.dock orientation -string left
