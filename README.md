@@ -6,11 +6,11 @@ macOS-specific dotfiles managed with yadm.
 
 | CI Job | Description |
 |--------|-------------|
-| **Lint** — bash/zsh syntax validation | [![Lint](https://github.com/stivce-devops-dude/dotfiles-mac/actions/workflows/test.yml/badge.svg?job=lint)](https://github.com/stivce-devops-dude/dotfiles-mac/actions/workflows/test.yml) |
-| **Validate Configs** — Brewfile, SSH, kitty | [![Validate Configs](https://github.com/stivce-devops-dude/dotfiles-mac/actions/workflows/test.yml/badge.svg?job=validate)](https://github.com/stivce-devops-dude/dotfiles-mac/actions/workflows/test.yml) |
-| **Bootstrap** — dry-run bootstrap test | [![Bootstrap](https://github.com/stivce-devops-dude/dotfiles-mac/actions/workflows/test.yml/badge.svg?job=bootstrap)](https://github.com/stivce-devops-dude/dotfiles-mac/actions/workflows/test.yml) |
-| **Test Brewfile** — verify packages in brew | [![Test Brewfile](https://github.com/stivce-devops-dude/dotfiles-mac/actions/workflows/test.yml/badge.svg?job=brew-bundle)](https://github.com/stivce-devops-dude/dotfiles-mac/actions/workflows/test.yml) |
-| **Test macOS** — deploy & integration | [![Test macOS](https://github.com/stivce-devops-dude/dotfiles-mac/actions/workflows/test.yml/badge.svg?job=test-macos)](https://github.com/stivce-devops-dude/dotfiles-mac/actions/workflows/test.yml) |
+| **Lint** — bash/zsh syntax validation | [![Lint](https://github.com/stivce-devops-dude/dotfiles-mac/actions/workflows/lint.yml/badge.svg)](https://github.com/stivce-devops-dude/dotfiles-mac/actions/workflows/lint.yml) |
+| **Config Validation** — Brewfile, SSH, kitty | [![Config Validation](https://github.com/stivce-devops-dude/dotfiles-mac/actions/workflows/config-validation.yml/badge.svg)](https://github.com/stivce-devops-dude/dotfiles-mac/actions/workflows/config-validation.yml) |
+| **Bootstrap** — dry-run bootstrap test | [![Bootstrap](https://github.com/stivce-devops-dude/dotfiles-mac/actions/workflows/bootstrap.yml/badge.svg)](https://github.com/stivce-devops-dude/dotfiles-mac/actions/workflows/bootstrap.yml) |
+| **Test Brewfile** — verify packages in brew | [![Test Brewfile](https://github.com/stivce-devops-dude/dotfiles-mac/actions/workflows/brew-bundle.yml/badge.svg)](https://github.com/stivce-devops-dude/dotfiles-mac/actions/workflows/brew-bundle.yml) |
+| **Test macOS** — deploy & integration | [![Test macOS](https://github.com/stivce-devops-dude/dotfiles-mac/actions/workflows/test-macos.yml/badge.svg)](https://github.com/stivce-devops-dude/dotfiles-mac/actions/workflows/test-macos.yml) |
 
 ## Setup
 

@@ -1,0 +1,52 @@
+name: Brew Bundle
+
+on:
+  push:
+    branches: [main, beta]
+  pull_request:
+    branches: [main]
+
+jobs:
+  brew-bundle:
+    name: Test Brewfile
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Deploy Brewfile
+        run: |
+          cp .Brewfile "$HOME/.Brewfile"
+      - name: Check packages exist in brew
+        run: |
+          # Test brews
+          while IFS= read -r line; do
+            [[ -z "$line" || "$line" == \#* ]] && continue
+            pkg=$(echo "$line" | awk '{print $2}')
+            if brew info "$pkg" &>/dev/null; then
+              echo "  ok: brew $pkg"
+            else
+              echo "  WARN: brew $pkg not found"
+            fi
+          done < <(grep "^brew " .Brewfile)
+          # Test casks
+          while IFS= read -r line; do
+            [[ -z "$line" || "$line" == \#* ]] && continue
+            pkg=$(echo "$line" | awk '{print $2}')
+            if brew info --cask "$pkg" &>/dev/null; then
+              echo "  ok: cask $pkg"
+            else
+              echo "  WARN: cask $pkg not found"
+            fi
+          done < <(grep "^cask " .Brewfile)
+          # Test taps
+          while IFS= read -r line; do
+            [[ -z "$line" || "$line" == \#* ]] && continue
+            pkg=$(echo "$line" | awk '{print $2}')
+            if brew tap | grep -q "$pkg"; then
+              echo "  ok: tap $pkg"
+            else
+              echo "  WARN: tap $pkg not found"
+            fi
+          done < <(grep "^tap " .Brewfile)
+      - name: Run brew bundle (dry-run)
+        run: |
+          brew bundle check --force 2>/dev/null && echo "  ok: brew bundle satisfied" || echo "  info: brew bundle needs install"

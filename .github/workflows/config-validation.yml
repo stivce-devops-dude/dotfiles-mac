@@ -1,0 +1,37 @@
+name: Config Validation
+
+on:
+  push:
+    branches: [main, beta]
+  pull_request:
+    branches: [main]
+
+jobs:
+  config-validation:
+    name: Config Validation
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate Brewfile syntax
+        run: |
+          if grep -q "^brew " .Brewfile 2>/dev/null; then
+            echo "  ok: Brewfile has brew entries"
+          else
+            echo "  WARN: Brewfile may be empty or use cask"
+          fi
+      - name: Validate SSH config
+        run: |
+          if grep -q "^Host " .ssh/config 2>/dev/null; then
+            echo "  ok: SSH config has hosts"
+          else
+            echo "  FAIL: SSH config invalid"
+            exit 1
+          fi
+      - name: Validate kitty config exists
+        run: |
+          if [ -f .config/kitty/kitty.conf ]; then
+            echo "  ok: kitty config exists"
+          else
+            echo "  FAIL: kitty config missing"
+            exit 1
+          fi
