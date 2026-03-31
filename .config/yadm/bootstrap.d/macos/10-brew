@@ -20,7 +20,7 @@ export PATH="/opt/homebrew/bin:/usr/local/bin:$PATH"
 BREWFILE="$HOME/.Brewfile"
 if [[ -f "$BREWFILE" ]]; then
   log "Running brew bundle (may ask for admin password once)..."
-  brew bundle --global --no-lock 2>&1 || true
+  brew bundle --global 2>&1 || true
 else
   warn "~/.Brewfile not found, skipping brew bundle"
 fi
