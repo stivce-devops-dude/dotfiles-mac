@@ -4,10 +4,12 @@ shopt -s nullglob
 
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
+# Cache sudo credentials upfront to avoid multiple prompts
+sudo -v 2>/dev/null || true
+
 # Source helpers
 for lib in "$REPO_ROOT/lib/"*; do
   [[ -f "$lib" ]] || continue
-  # shellcheck disable=SC1090
   source "$lib"
 done
 
