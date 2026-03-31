@@ -1,9 +1,13 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Source libs
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../lib" && pwd)"
 source "$SCRIPT_DIR/logging"
+
+if [[ "${CI:-}" == "true" ]]; then
+  log "Skipping defaults in CI"
+  exit 0
+fi
 
 log "Configuring Dock..."
 defaults write com.apple.dock orientation -string left

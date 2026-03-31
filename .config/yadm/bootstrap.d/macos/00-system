@@ -16,9 +16,6 @@ if [[ "${CI:-}" == "true" ]]; then
   exit 0
 fi
 
-# Request sudo upfront
-sudo -v
-
 # Xcode Command Line Tools
 if ! xcode-select -p &>/dev/null; then
   log "Installing Xcode Command Line Tools..."
