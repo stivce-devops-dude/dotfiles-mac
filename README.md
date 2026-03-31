@@ -6,11 +6,11 @@ macOS-specific dotfiles managed with [yadm](https://yadm.io/).
 
 | CI Job | Description |
 |--------|-------------|
-| **Lint** — bash/zsh syntax + shellcheck | |
-| **Config Validation** — verify Brewfile, SSH | |
-| **Bootstrap** — dry-run bootstrap test | |
-| **Test macOS** — deploy & integration | |
-| **Brew Bundle** — verify packages in brew | |
+| **Lint** — bash/zsh syntax + shellcheck | [![Lint](https://github.com/stivce-devops-dude/dotfiles-mac/actions/workflows/lint.yml/badge.svg)](https://github.com/stivce-devops-dude/dotfiles-mac/actions/workflows/lint.yml) |
+| **Config Validation** — verify Brewfile, SSH | [![Config Validation](https://github.com/stivce-devops-dude/dotfiles-mac/actions/workflows/config-validation.yml/badge.svg)](https://github.com/stivce-devops-dude/dotfiles-mac/actions/workflows/config-validation.yml) |
+| **Bootstrap** — dry-run bootstrap test | [![Bootstrap](https://github.com/stivce-devops-dude/dotfiles-mac/actions/workflows/bootstrap.yml/badge.svg)](https://github.com/stivce-devops-dude/dotfiles-mac/actions/workflows/bootstrap.yml) |
+| **Test macOS** — deploy & integration | [![Test macOS](https://github.com/stivce-devops-dude/dotfiles-mac/actions/workflows/test-macos.yml/badge.svg)](https://github.com/stivce-devops-dude/dotfiles-mac/actions/workflows/test-macos.yml) |
+| **Brew Bundle** — verify packages in brew | [![Brew Bundle](https://github.com/stivce-devops-dude/dotfiles-mac/actions/workflows/brew-bundle.yml/badge.svg)](https://github.com/stivce-devops-dude/dotfiles-mac/actions/workflows/brew-bundle.yml) |
 
 ## Setup
 
