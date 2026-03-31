@@ -8,21 +8,22 @@ source "$SCRIPT_DIR/logging"
 REPO_ROOT="${REPO_ROOT:-$(cd "$(dirname "${BASH_SOURCE[0]}")/../../../dotfiles" && pwd)}"
 CORE="$REPO_ROOT/.config/yadm/packages/core.txt"
 
+# Cache sudo credentials upfront to avoid multiple prompts
+log "Caching admin credentials..."
+sudo -v
+while true; do sudo -n true 2>/dev/null && break; sleep 1; done &
+
 # Install Homebrew if missing
 if ! command -v brew &>/dev/null; then
   log "Installing Homebrew..."
-  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 fi
 
-# Install core cross-platform packages
-log "Installing core packages..."
-while IFS= read -r pkg; do
-  brew install "$pkg"
-done < <(grep -v '^\s*#' "$CORE" | grep -v '^\s*$')
-
-# Install macOS-specific packages and casks from ~/.Brewfile
-if [[ -f "$HOME/.Brewfile" ]]; then
-  log "Running brew bundle for macOS-specific packages..."
+# Install all packages at once using brew bundle
+log "Installing packages via brew bundle..."
+BREWFILE="$HOME/.Brewfile"
+if [[ -f "$BREWFILE" ]]; then
+  log "Running brew bundle..."
   brew bundle --global
 else
   warn "~/.Brewfile not found, skipping brew bundle"
