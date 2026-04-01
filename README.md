@@ -1,46 +1,36 @@
 # dotfiles-mac
 
-macOS-specific dotfiles managed with [yadm](https://yadm.io/).
-
-## CI Jobs
-
-| CI Job | Description |
-|--------|-------------|
-| **Lint** — bash/zsh syntax + shellcheck | [![Lint](https://github.com/stivce-devops-dude/dotfiles-mac/actions/workflows/lint.yml/badge.svg)](https://github.com/stivce-devops-dude/dotfiles-mac/actions/workflows/lint.yml) |
-| **Config Validation** — verify Brewfile, SSH | [![Config Validation](https://github.com/stivce-devops-dude/dotfiles-mac/actions/workflows/config-validation.yml/badge.svg)](https://github.com/stivce-devops-dude/dotfiles-mac/actions/workflows/config-validation.yml) |
-| **Bootstrap** — dry-run bootstrap test | [![Bootstrap](https://github.com/stivce-devops-dude/dotfiles-mac/actions/workflows/bootstrap.yml/badge.svg)](https://github.com/stivce-devops-dude/dotfiles-mac/actions/workflows/bootstrap.yml) |
-| **Test macOS** — deploy & integration | [![Test macOS](https://github.com/stivce-devops-dude/dotfiles-mac/actions/workflows/test-macos.yml/badge.svg)](https://github.com/stivce-devops-dude/dotfiles-mac/actions/workflows/test-macos.yml) |
-| **Brew Bundle** — verify packages in brew | [![Brew Bundle](https://github.com/stivce-devops-dude/dotfiles-mac/actions/workflows/brew-bundle.yml/badge.svg)](https://github.com/stivce-devops-dude/dotfiles-mac/actions/workflows/brew-bundle.yml) |
+macOS-specific dotfiles. Managed as a bare git repo.
 
 ## Setup
 
 ```bash
-yadm clone git@github.com:stivce-devops-dude/dotfiles-mac.git
-yadm bootstrap
+git clone --bare git@github.com:stivce-devops-dude/dotfiles-mac.git ~/.dotfiles-os
+git --git-dir=$HOME/.dotfiles-os --work-tree=$HOME checkout
 ```
 
-## What's Included
+Add to your shell profile:
 
-- **Package Manager**: Homebrew + Brewfile
-- **Window Manager**: Aerospace
-- **Terminal**: kitty
-- **Apps**: Firefox, Arc, VS Code, Telegram, Signal, etc.
+```bash
+alias dot-os='git --git-dir=$HOME/.dotfiles-os --work-tree=$HOME'
+dot-os config status.showUntrackedFiles no
+```
 
-## Bootstrap Scripts
+## What's included
 
-| Script | Description |
-|--------|-------------|
-| `.config/yadm/bootstrap` | Main bootstrap |
-| `bootstrap.d/macos/00-system` | Xcode CLT, Rosetta 2 |
-| `bootstrap.d/macos/10-brew` | Homebrew + core packages |
-| `bootstrap.d/macos/30-defaults` | macOS defaults |
+- **Window manager** — `.config/aerospace/aerospace.toml`
+- **Terminal** — `.config/kitty/kitty.conf` (macOS-specific overrides)
+- **SSH** — `.ssh/config`
 
-## Package Lists
+## Usage
 
-| File | Description |
-|------|-------------|
-| `.Brewfile` | Homebrew packages & casks |
+```bash
+dot-os add ~/.config/aerospace/aerospace.toml
+dot-os commit -m "update aerospace config"
+dot-os push
+```
 
-## Dependencies
+## Related repos
 
-Requires the general dotfiles repo for shared packages.
+- [dotfiles](https://github.com/stivce-devops-dude/dotfiles) — Shared dotfiles (zsh, nvim, starship, kitty base, git)
+- [os-configuration](https://github.com/stivce-devops-dude/os-configuration) — Ansible playbook for package management and system setup
